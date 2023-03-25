@@ -17,16 +17,14 @@ steps:
   entrypoint: 'sh'
   args: 
   - '-c'
-  - |
-      terraform init
+  - terraform init
 
 - id: 'tf apply'
   name: 'hashicorp/terraform:1.2.0'
   entrypoint: 'sh'
   args: 
   - '-c'
-  - | 
-      terraform apply -auto-approve -var image_tag=$TAG_NAME -target kubernetes_deployment.deployment_app_web
+  - terraform apply -auto-approve -var image_tag=$TAG_NAME -target kubernetes_deployment.deployment_app_web
 
 
 logsBucket: 'gs://mmds-nuwe-lucabem-bucket/logs/cloud-build/${_IMAGE}/$TAG_NAME'
