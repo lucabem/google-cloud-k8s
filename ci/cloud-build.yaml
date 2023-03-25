@@ -31,7 +31,7 @@ steps:
           echo ""
           echo "*************** TERRAFOM PLAN *******************"
           echo "*************************************************"
-          terraform plan -var image_tag=$TAG_NAME || exit 1
+          terraform plan  || exit 1
 
 
 - id: 'tf apply'
@@ -43,12 +43,12 @@ steps:
           echo ""
           echo "*************** TERRAFOM APPLY ******************"
           echo "*************************************************"
-          terraform apply -auto-approve -var image_tag=$TAG_NAME || exit 1
+          terraform apply -auto-approve || exit 1
 
 
-logsBucket: 'gs://mmds-nuwe-lucabem-bucket/logs/cloud-build/${_IMAGE}/$TAG_NAME'
+# logsBucket: 'gs://mmds-nuwe-lucabem-bucket/logs/cloud-build/${_IMAGE}/$TAG_NAME'
 
 images:
-- 'europe-west1-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:$TAG_NAME'
+# - 'europe-west1-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:$TAG_NAME'
 - 'europe-west1-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:latest'
 
