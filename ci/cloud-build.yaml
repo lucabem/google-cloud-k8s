@@ -1,0 +1,49 @@
+
+steps:
+- id: 'docker build'
+  name: 'docker'
+  args: 
+  -  'build'
+  -  '-t'
+  -  'europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:$TAG_NAME'
+  -  '-t'
+  -  'europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:latest'
+  -  '.'
+
+
+- id: 'tf init'
+  name: 'hashicorp/terraform:1.2.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - |
+      terraform init
+      echo "*************** TERRAFORM INIT ******************"
+
+      
+- id: 'tf plan'
+  name: 'hashicorp/terraform:1.2.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - | 
+      terraform plan -var image_tag=$TAG_NAME
+      echo "*************** TERRAFOM PLAN ******************"
+
+
+- id: 'tf apply'
+  name: 'hashicorp/terraform:1.2.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - | 
+      terraform apply -auto-approve -var image_tag=$TAG_NAME
+      echo "***************************** TERRAFROM APPLY *******************************"
+
+
+logsBucket: 'gs://mmds-nuwe-lucabem-bucket/logs/cloud-build/${_IMAGE}/$TAG_NAME'
+
+images:
+- 'europe-west1-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:$TAG_NAME'
+- 'europe-west1-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:latest'
+

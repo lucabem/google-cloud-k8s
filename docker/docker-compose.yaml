@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  local:
+    build: .
+    ports:
+     - "3000:3000"
+     
+  pro:
+    image: europe-west1-docker.pkg.dev/axkfjq0kgst4vrop0zyw812xwjmjtg/mms-cloud-repo/mms-cloud-web:1.0.3
+    ports:
+     - "3000:3000"
+
