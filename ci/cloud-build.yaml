@@ -14,11 +14,31 @@ steps:
   name: gcr.io/cloud-builders/kubectl
   args: ['apply', '-f', 'manifests/00_web_namespace.yaml']
   env:
-    - CLOUDSDK_COMPUTE_ZONE=europe-west1-a
+    - CLOUDSDK_COMPUTE_REGION=europe-west1
+    - CLOUDSDK_CONTAINER_CLUSTER=mmds-nuwe-lucabem-cluster
+
+- id: Create Deployment
+  name: gcr.io/cloud-builders/kubectl
+  args: ['apply', '-f', 'manifests/01_web_deployment.yaml']
+  env:
+    - CLOUDSDK_COMPUTE_REGION=europe-west1
     - CLOUDSDK_CONTAINER_CLUSTER=mmds-nuwe-lucabem-cluster
 
 
+- id: Updating Deployment
+  name: gcr.io/cloud-builders/kubectl
+  args: ['set', 'image', 'deployment/web-deployment', 'web=europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:$TAG_NAME']
+  env:
+    - CLOUDSDK_COMPUTE_REGION=europe-west1
+    - CLOUDSDK_CONTAINER_CLUSTER=mmds-nuwe-lucabem-cluster
 
+
+- id: Create Service
+  name: gcr.io/cloud-builders/kubectl
+  args: ['apply', '-f', 'manifests/02_web_service.yaml']
+  env:
+    - CLOUDSDK_COMPUTE_REGION=europe-west1
+    - CLOUDSDK_CONTAINER_CLUSTER=mmds-nuwe-lucabem-cluster
 
 
 logsBucket: 'gs://mmds-nuwe-lucabem-bucket/logs/cloud-build/${_IMAGE}/$TAG_NAME'
