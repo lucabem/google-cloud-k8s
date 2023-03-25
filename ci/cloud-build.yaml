@@ -4,8 +4,8 @@ steps:
   name: 'docker'
   args: 
   -  'build'
-  -  '-t'
-  -  'europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:$TAG_NAME'
+  # -  '-t'
+  # -  'europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:$TAG_NAME'
   -  '-t'
   -  'europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:latest'
   -  '.'
