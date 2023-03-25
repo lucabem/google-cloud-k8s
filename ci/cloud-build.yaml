@@ -15,6 +15,9 @@ steps:
   args: ['apply', '-f', 'manifests/00_web_namespace.yaml']
 
 
+  
+
+
 
 
 
