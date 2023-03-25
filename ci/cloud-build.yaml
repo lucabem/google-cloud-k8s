@@ -46,7 +46,10 @@ steps:
           terraform apply -auto-approve || exit 1
 
 
-# logsBucket: 'gs://mmds-nuwe-lucabem-bucket/logs/cloud-build/${_IMAGE}/$TAG_NAME'
+logsBucket: 'gs://mmds-nuwe-lucabem-bucket/logs/cloud-build/${_IMAGE}/latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
 
 images:
 # - 'europe-west1-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:$TAG_NAME'
