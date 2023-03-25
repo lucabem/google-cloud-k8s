@@ -106,7 +106,7 @@ resource "kubectl_manifest" "service_app_web" {
   count            = length(data.kubectl_path_documents.service_app_web.documents)
   yaml_body        = element(data.kubectl_path_documents.service_app_web.documents, count.index)
   force_new        = true
-  wait             = false
-  wait_for_rollout = false
+  wait             = true
+  wait_for_rollout = true
 
 }
