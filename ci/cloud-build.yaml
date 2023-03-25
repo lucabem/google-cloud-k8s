@@ -8,48 +8,33 @@ steps:
   -  'europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:latest'
   -  '.'
 
-# - id: 'tf init'
-#   name: 'hashicorp/terraform:1.2.0'
-#   entrypoint: 'sh'
-#   args:
-#   - '-c'
-#   - |
-#           echo ""
-#           echo "*************** TERRAFOM INIT *******************"
-#           echo "*************************************************"
-#           terraform init || exit 1
+- id: 'tf init'
+  name: 'hashicorp/terraform:1.2.0'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - terraform init
+
+- id: 'tf plan'
+  name: 'hashicorp/terraform:1.2.0'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - terraform plan
 
 
-# - id: 'tf plan'
-#   name: 'hashicorp/terraform:1.2.0'
-#   entrypoint: 'sh'
-#   args:
-#   - '-c'
-#   - |
-#           echo ""
-#           echo "*************** TERRAFOM PLAN *******************"
-#           echo "*************************************************"
-#           terraform plan  || exit 1
+- id: 'tf apply'
+  name: 'hashicorp/terraform:1.2.0'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - terraform apply -auto-approve
 
 
-# - id: 'tf apply'
-#   name: 'hashicorp/terraform:1.2.0'
-#   entrypoint: 'sh'
-#   args:
-#   - '-c'
-#   - |
-#           echo ""
-#           echo "*************** TERRAFOM APPLY ******************"
-#           echo "*************************************************"
-#           terraform apply -auto-approve || exit 1
-
-
-# logsBucket: 'gs://mmds-nuwe-lucabem-bucket/logs/cloud-build/${_IMAGE}/latest'
 
 options:
   logging: CLOUD_LOGGING_ONLY
 
 images:
-# - 'europe-west1-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:$TAG_NAME'
 - 'europe-west1-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE}:latest'
 
