@@ -46,7 +46,7 @@ steps:
           terraform apply -auto-approve || exit 1
 
 
-logsBucket: 'gs://mmds-nuwe-lucabem-bucket/logs/cloud-build/${_IMAGE}/latest'
+# logsBucket: 'gs://mmds-nuwe-lucabem-bucket/logs/cloud-build/${_IMAGE}/latest'
 
 options:
   logging: CLOUD_LOGGING_ONLY
