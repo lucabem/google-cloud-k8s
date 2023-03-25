@@ -16,9 +16,13 @@ terraform {
     }
   }
 
+  backend "gcs" {
+    bucket = "axkfjq0kgst4vrop0zyw812xwjmjtg-tfstate"
+    prefix = "state"
+  }
+
   required_version = ">= 1.2.0"
 }
-
 
 
 

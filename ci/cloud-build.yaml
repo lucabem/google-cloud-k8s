@@ -10,35 +10,27 @@ steps:
   -  'europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:latest'
   -  '.'
 
-- id: Create Namespace
-  name: gcr.io/cloud-builders/kubectl
-  args: ['apply', '-f', 'manifests/00_web_namespace.yaml']
-  env:
-    - CLOUDSDK_COMPUTE_REGION=europe-west1
-    - CLOUDSDK_CONTAINER_CLUSTER=mmds-nuwe-lucabem-cluster
+- id: 'tf plan'
+  name: 'hashicorp/terraform:1.2.0'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+          echo ""
+          echo "*************** TERRAFOM PLAN ******************"
+          echo "*************************************************"
+          terraform plan || exit 1
 
-- id: Create Deployment
-  name: gcr.io/cloud-builders/kubectl
-  args: ['apply', '-f', 'manifests/01_web_deployment.yaml']
-  env:
-    - CLOUDSDK_COMPUTE_REGION=europe-west1
-    - CLOUDSDK_CONTAINER_CLUSTER=mmds-nuwe-lucabem-cluster
-
-
-- id: Updating Deployment
-  name: gcr.io/cloud-builders/kubectl
-  args: ['set', 'image', 'deployment/web-deployment', 'web=europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:$TAG_NAME']
-  env:
-    - CLOUDSDK_COMPUTE_REGION=europe-west1
-    - CLOUDSDK_CONTAINER_CLUSTER=mmds-nuwe-lucabem-cluster
-
-
-- id: Create Service
-  name: gcr.io/cloud-builders/kubectl
-  args: ['apply', '-f', 'manifests/02_web_service.yaml']
-  env:
-    - CLOUDSDK_COMPUTE_REGION=europe-west1
-    - CLOUDSDK_CONTAINER_CLUSTER=mmds-nuwe-lucabem-cluster
+- id: 'tf apply'
+  name: 'hashicorp/terraform:1.2.0'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+          echo ""
+          echo "*************** TERRAFOM PLAN ******************"
+          echo "*************************************************"
+          terraform apply -var image_tag=$TAG_NAME || exit 1
 
 
 logsBucket: 'gs://mmds-nuwe-lucabem-bucket/logs/cloud-build/${_IMAGE}/$TAG_NAME'
