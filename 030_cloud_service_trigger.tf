@@ -7,7 +7,7 @@ resource "google_cloudbuild_trigger" "trigger_on_push_on_main_repo" {
     owner = local.owner
     name  = "mms-cloud-skeleton"
     push {
-      branch = "^master$"
+      tag    = ".*"
     }
   }
 
