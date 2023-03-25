@@ -7,18 +7,17 @@ resource "google_cloudbuild_trigger" "trigger_on_push_on_main_repo" {
     owner = local.owner
     name  = "mms-cloud-skeleton"
     push {
-      tag    = ".*"
+      branch = "^master$"
     }
   }
 
   approval_config {
-     approval_required = true 
+     approval_required = false 
   }
 
   substitutions = {
     _REPOSITORY = google_artifact_registry_repository.repo_docker_images.name
     _IMAGE      = local.image_name
-    TAG_NAME    = "latest"
   }
 
   filename = "ci/cloud-build.yaml"
