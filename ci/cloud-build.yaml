@@ -22,7 +22,7 @@ steps:
           terraform init || exit 1
 
 
-- id: 'tf apply'
+- id: 'tf plan'
   name: 'hashicorp/terraform:1.2.0'
   entrypoint: 'sh'
   args:
