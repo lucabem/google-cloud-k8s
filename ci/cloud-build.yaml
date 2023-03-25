@@ -10,16 +10,17 @@ steps:
   -  'europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:latest'
   -  '.'
 
-- id: 'tf plan'
+- id: 'tf init'
   name: 'hashicorp/terraform:1.2.0'
   entrypoint: 'sh'
   args:
   - '-c'
   - |
           echo ""
-          echo "*************** TERRAFOM PLAN ******************"
+          echo "*************** TERRAFOM INIT *******************"
           echo "*************************************************"
-          terraform plan || exit 1
+          terraform init || exit 1
+
 
 - id: 'tf apply'
   name: 'hashicorp/terraform:1.2.0'
@@ -28,9 +29,21 @@ steps:
   - '-c'
   - |
           echo ""
-          echo "*************** TERRAFOM PLAN ******************"
+          echo "*************** TERRAFOM PLAN *******************"
           echo "*************************************************"
-          terraform apply -var image_tag=$TAG_NAME || exit 1
+          terraform plan -var image_tag=$TAG_NAME || exit 1
+
+
+- id: 'tf apply'
+  name: 'hashicorp/terraform:1.2.0'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+          echo ""
+          echo "*************** TERRAFOM APPLY ******************"
+          echo "*************************************************"
+          terraform apply -auto-approve -var image_tag=$TAG_NAME || exit 1
 
 
 logsBucket: 'gs://mmds-nuwe-lucabem-bucket/logs/cloud-build/${_IMAGE}/$TAG_NAME'
