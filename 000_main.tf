@@ -7,13 +7,7 @@ terraform {
     kubernetes = {
       version = "~> 2.13"
     }
-    kubectl = {
-      source  = "gavinbunney/kubectl"
-      version = ">= 1.14"
-    }
-    external = {
-      source = "hashicorp/external"
-    }
+
   }
 
   backend "gcs" {
