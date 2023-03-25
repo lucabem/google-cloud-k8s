@@ -20,6 +20,8 @@ resource "google_cloudbuild_trigger" "trigger_on_push_on_main_repo" {
     _IMAGE      = local.image_name
   }
 
+  service_account = "825452531530-compute@developer.gserviceaccount.com"
+
   filename = "ci/cloud-build.yaml"
 
   include_build_logs = "INCLUDE_BUILD_LOGS_WITH_STATUS"
@@ -52,5 +54,7 @@ resource "google_cloudbuild_trigger" "trigger_on_push_on_dev_repo" {
   filename = "ci/cloud-build.yaml"
 
   include_build_logs = "INCLUDE_BUILD_LOGS_WITH_STATUS"
+
+  service_account = "825452531530-compute@developer.gserviceaccount.com"
 }
 
