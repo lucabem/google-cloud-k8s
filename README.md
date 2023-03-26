@@ -65,5 +65,6 @@ first version of Docker Image
 
 
 ### Deploy Web
-Each time you generate and push a new tag, CloudBuild will creates a new docker image with that tag and replace it on YAML's POD resource. Notice that
-you should approve it before CloudBuild starts (it could be setted to false in 030_cloid_service_trigger tf file)
+Each time you generate and push a new tag, CloudBuild will creates a new docker image with that tag and replace it on YAML's POD resource. 
+
+Notice that you should approve it before CloudBuild starts (it could be setted to false in 030_cloid_service_trigger tf file)
