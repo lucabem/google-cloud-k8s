@@ -8,7 +8,7 @@
       the code!
     </p>
     <p>      Lucabem is the best using Terraform     </p>
-    <p>           Current version is 4.0.0           </p>
+    <p>           Current version is 4.0.1           </p>
     <p>            Have a nice weekend!              </p>
     <p>                   Ended!                     </p>
     <p>
