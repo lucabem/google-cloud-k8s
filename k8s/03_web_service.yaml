@@ -21,7 +21,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: nuwe-mediamarkt-web-app
+    app: web
   ports:
   - protocol: TCP
     port: 80

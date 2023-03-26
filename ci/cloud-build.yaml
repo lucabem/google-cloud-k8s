@@ -13,7 +13,10 @@ steps:
 
 - id: Create Deployment
   name: gcr.io/cloud-builders/kubectl
-  args: ['apply', '-f', 'k8s/02_web_deployment.yaml']
+  args: 
+  - 'apply'
+  - '-f'
+  - 'k8s/02_web_deployment.yaml'
   env:
     - CLOUDSDK_COMPUTE_REGION=europe-west1
     - CLOUDSDK_CONTAINER_CLUSTER=mmds-nuwe-lucabem-cluster
@@ -21,7 +24,13 @@ steps:
 
 - id: Updating Deployment
   name: gcr.io/cloud-builders/kubectl
-  args: ['set', 'image', 'deployment/web-deployment', 'web=europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:$TAG_NAME', '-n', 'mediamarkt-web-ns']
+  args:
+  - 'set'
+  - 'image'
+  - 'deployment/web-deployment'
+  - 'web=europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}:$TAG_NAME'
+  - '-n'
+  - 'mediamarkt-web-ns'
   env:
     - CLOUDSDK_COMPUTE_REGION=europe-west1
     - CLOUDSDK_CONTAINER_CLUSTER=mmds-nuwe-lucabem-cluster
@@ -29,10 +38,14 @@ steps:
 
 - id: Create Service
   name: gcr.io/cloud-builders/kubectl
-  args: ['apply', '-f', 'k8s/03_web_service.yaml']
+  args:
+  - 'apply'
+  - '-f'
+  - 'k8s/03_web_service.yaml'
   env:
     - CLOUDSDK_COMPUTE_REGION=europe-west1
     - CLOUDSDK_CONTAINER_CLUSTER=mmds-nuwe-lucabem-cluster
+
 
 # - id: 'tf init'
 #   name: 'hashicorp/terraform:1.2.0'
