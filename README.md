@@ -47,7 +47,7 @@ gsutil versioning set on gs://${PROJECT_ID}-tfstate
 The we initialize backend using this bucket
 ```
   backend "gcs" {
-    bucket = "axkfjq0kgst4vrop0zyw812xwjmjtg-tfstate"
+    bucket = "${PROJECT_ID}-tfstate"
     prefix = "state"
   }
 ```
