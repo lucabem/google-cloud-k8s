@@ -28,59 +28,33 @@ quickly getting started developing a web application. Check the [Getting Started
 - [Make](https://www.gnu.org/software/make/manual/make.html)
 
 ## Getting Started
+### Cloud Storage Bucket with TF-STATE
+In order to keep tf-state remote using GCP, we need to create an Bucket where we will save tfstate
+```
+gsutil mb gs://${PROJECT_ID}-tfstate
+gsutil versioning set on gs://${PROJECT_ID}-tfstate
+```
 
-Within the [Makefile](Makefile) you can handle the entire flow to get everything up & running:
+The we initialize backend using this bucket
+```
+  backend "gcs" {
+    bucket = "axkfjq0kgst4vrop0zyw812xwjmjtg-tfstate"
+    prefix = "state"
+  }
+```
 
-1. Install `make` on your computer, if you do not already have it.
-2. Install the Yarn dependencies: `make deps`
-3. Start the application: `make up`
+### Terraform
+Commands to genereate the solution via Terraform:
+```
+terraform init
+terraform plan
+terraform apply
+```
 
-As you could see on the [Makefile](Makefile) script, you could just avoid those steps and just execute `make up`, as
-**deps** are dependant of it.
+If you want to deploy K8S resources via Teraform, you should replace ci/cloud-build.yaml to lines with #. POD will be failing until you generate
+first version of Docker Image
 
-Once these steps are finished, you could access to the application navigating
-into [http://localhost:3000](http://localhost:3000).
 
-## Using Dockerfile
-
-In case you don't want to install make but still run with docker follow the below instructions:
-
-1. Docker build -t <app-name>
-2. Docker run -it -p 3000:3000 <app-name>
-
-This version is meant to be run on prod environments and listens to all IP adressess. You can change this inside the package.json. You can change as well the exposed port inside the **Dockerfile** and **package.json**
-
-## Overview
-
-This skeleton is based on
-a [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) approach, so you
-could find the first basic elements:
-
-> You could [find here an amazing Dev.to article](https://dev.to/bespoyasov/clean-architecture-on-frontend-4311)
-> explaining this Clean Architecture on frontend! (credits to [@bespoyasov\_](https://twitter.com/bespoyasov_)).
-
-### UI layer
-
-This folder contains the basic UI elements. You should add any UI element inside this folder, with the respective CSS
-file module.
-
-### Application layer
-
-This layer is the one in charge of the different use cases of the application. A Use Case it's a workflow of what should
-it happen to a concrete Domain entity once interacts with the application.
-
-This is the layer which would use any external service and communicate with the world (ie. APIs, databases, etc...)
-
-### Services layer
-
-As we said, this is the layer that communicates the application with the outer world, and the one that would be coupled
-with almost any 3rd party provider, framework, etc...
-
-## Support
-
-If you are having problems or need anything else, please let us know by
-[raising a new issue](https://github.com/nuwe-reports/skeleton-vue/issues/new/choose).
-
-## License
-
-This project is licensed with the [MIT license](LICENSE).
+### Deploy Web
+Each time you generate and push a new tag, CloudBuild will creates a new docker image with that tag and replace it on YAML's POD resource. Notice that
+you should approve it before CloudBuild starts (it could be setted to false in 030_cloid_service_trigger tf file)
