@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: web-deployment
-  namespace: nuwe-mediamarkt
+  namespace: mediamarkt-web-ns
   labels:
     app: web
 spec:
