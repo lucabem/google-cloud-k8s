@@ -28,6 +28,15 @@ quickly getting started developing a web application. Check the [Getting Started
 - [Make](https://www.gnu.org/software/make/manual/make.html)
 
 ## Getting Started
+### Docker-Compose
+I have created two services for docker-compose. First one, named local, will generate docker image from current repo's state.
+```
+docker-compose up local
+```
+The second one will pull from Artifact Registry the Docker's Image
+```
+docker-compose up pro
+```
 ### Cloud Storage Bucket with TF-STATE
 In order to keep tf-state remote using GCP, we need to create an Bucket where we will save tfstate
 ```
