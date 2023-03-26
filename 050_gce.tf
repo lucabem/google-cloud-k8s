@@ -33,58 +33,58 @@ resource "kubernetes_namespace" "namespace_app_web" {
 ################################################################################
 # DEPLOYMENT
 ################################################################################
-resource "kubernetes_deployment" "deployment_app_web" {
-  metadata {
-    name      = "nuwe-web-app"
-    namespace = kubernetes_namespace.namespace_app_web.metadata[0].name
-    labels    = local.tags
-  }
-  spec {
-    replicas = 1
-    selector {
-      match_labels = {
-        app = "nuwe-web-app"
-      }
-    }
-    template {
-      metadata {
-        labels = {
-          app = "nuwe-web-app"
-        }
-      }
-      spec {
-        container {
-          name = "nuwe-web-app"
-          image = format(
-            "%s-docker.pkg.dev/%s/%s/%s:%s",
-            local.region, local.project_id, google_artifact_registry_repository.repo_docker_images.name, local.image_name, var.image_tag
-          )
-          port {
-            container_port = 3000
-          }
-        }
-      }
-    }
-  }
-}
+# resource "kubernetes_deployment" "deployment_app_web" {
+#   metadata {
+#     name      = "nuwe-web-app"
+#     namespace = kubernetes_namespace.namespace_app_web.metadata[0].name
+#     labels    = local.tags
+#   }
+#   spec {
+#     replicas = 1
+#     selector {
+#       match_labels = {
+#         app = "nuwe-web-app"
+#       }
+#     }
+#     template {
+#       metadata {
+#         labels = {
+#           app = "nuwe-web-app"
+#         }
+#       }
+#       spec {
+#         container {
+#           name = "nuwe-web-app"
+#           image = format(
+#             "%s-docker.pkg.dev/%s/%s/%s:%s",
+#             local.region, local.project_id, google_artifact_registry_repository.repo_docker_images.name, local.image_name, var.image_tag
+#           )
+#           port {
+#             container_port = 3000
+#           }
+#         }
+#       }
+#     }
+#   }
+# }
 
 ################################################################################
 # SERVICE
 ################################################################################
-resource "kubernetes_service" "service_app_web" {
-  metadata {
-    name      = "nuwe-app"
-    namespace = kubernetes_namespace.namespace_app_web.metadata[0].name
-    labels    = local.tags
-  }
-  spec {
-    selector = {
-      app = kubernetes_deployment.deployment_app_web.spec[0].template[0].metadata[0].labels.app
-    }
-    type = "LoadBalancer"
-    port {
-      port        = 80
-      target_port = 3000
-    }
-  }
-}
+# resource "kubernetes_service" "service_app_web" {
+#   metadata {
+#     name      = "nuwe-app"
+#     namespace = kubernetes_namespace.namespace_app_web.metadata[0].name
+#     labels    = local.tags
+#   }
+#   spec {
+#     selector = {
+#       app = kubernetes_deployment.deployment_app_web.spec[0].template[0].metadata[0].labels.app
+#     }
+#     type = "LoadBalancer"
+#     port {
+#       port        = 80
+#       target_port = 3000
+#     }
+#   }
+# }

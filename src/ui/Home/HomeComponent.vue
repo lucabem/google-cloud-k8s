@@ -8,7 +8,7 @@
       the code!
     </p>
     <p>      Lucabem is the best using Terraform     </p>
-    <p>           Current version is 1.0.5           </p>
+    <p>           Current version is 3.0.5           </p>
     <p>            Have a nice weekend!              </p>
     <p>
       You could start modifying the <code>src/App.vue</code> file to see any
